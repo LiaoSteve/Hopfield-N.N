@@ -6,12 +6,14 @@ def bw(X):
     '''
     input X with shape (10,10)
     '''
-    for i in range(10):
-        for j in range(10):
+    for i in range(X.shape[0]):
+        for j in range(X.shape[1]):
             if X[i,j] == -1:
+                X[i,j] = 255
+            elif X[i,j] == 1:
                 X[i,j] = 0
             else :
-                X[i,j] = -1
+                X[i,j] = 100
     return X
 
 def energy(X,W_fixed):
@@ -39,10 +41,6 @@ def f(W,X):
         i += 1
     return v    
 
-#---------------------------------------------
-#-------------  Traning Pattern  -------------
-#---------------------------------------------
-
 def add_noise(X,percent):
     '''
     The shape of X is 10 by 10. \n
@@ -60,7 +58,19 @@ def add_noise(X,percent):
             pass
     return X
 
-
+def add_unknown(X,percent):
+    '''
+    The shape of X is 10 by 10. \n
+    Percent is the percentage unknown of X.(note that percentage is 0,0.1,0.2,0.3,...,1.0)\n 
+    Return the X with percentage of unknown
+    '''
+    n = int((100 * percent)/10)
+    row = X.shape[0] - n    
+    for i in range(row,X.shape[0]):
+        for j in range(X.shape[1]):        
+            X[i,j] = 0
+    return X
+#trining pattern
 X0 = np.array([ [-1,-1,-1, 1, 1, 1, 1,-1,-1,-1],
                 [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
                 [-1, 1, 1,-1,-1,-1,-1, 1, 1,-1],
@@ -116,17 +126,70 @@ X8 = np.array([ [-1,-1,-1, 1, 1, 1, 1,-1,-1,-1],
                 [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
                 [-1,-1, 1, 1, 1, 1, 1, 1,-1,-1]])
 
+X0_2=np.array([ [-1,-1,-1, 1, 1, 1, 1,-1,-1,-1],
+                [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
+                [-1, 1, 1,-1,-1,-1,-1, 1, 1,-1],
+                [ 1, 1, 1,-1,-1,-1,-1, 1, 1, 1],
+                [ 1, 1, 1,-1,-1,-1,-1, 1, 1, 1],
+                [ 1, 1, 1,-1,-1,-1,-1, 1, 1, 1],
+                [ 1, 1, 1,-1,-1,-1,-1, 1, 1, 1],
+                [-1, 1, 1,-1,-1,-1,-1, 1, 1,-1],
+                [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
+                [-1,-1,-1, 1, 1, 1, 1,-1,-1,-1]])
+
+X4_2=np.array([ [-1,-1,-1,-1, 1, 1,-1, 1, 1,-1],
+                [-1,-1,-1, 1, 1,-1,-1, 1, 1,-1],
+                [-1,-1, 1, 1,-1,-1,-1, 1, 1,-1],
+                [-1, 1, 1,-1,-1,-1,-1, 1, 1,-1],
+                [ 1, 1,-1,-1,-1,-1,-1, 1, 1,-1],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [-1,-1,-1,-1,-1,-1,-1, 1, 1,-1],
+                [-1,-1,-1,-1,-1,-1,-1, 1, 1,-1],
+                [-1,-1,-1,-1,-1,-1,-1, 1, 1,-1]])
+
+X2_2=np.array([ [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [-1,-1,-1,-1,-1,-1,-1,-1, 1, 1],
+                [-1,-1,-1,-1,-1,-1,-1,-1, 1, 1],
+                [-1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
+                [ 1, 1,-1,-1,-1,-1,-1,-1,-1,-1],
+                [ 1, 1,-1,-1,-1,-1,-1,-1,-1,-1],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]])
+
+X6_2=np.array([ [-1,-1, 1, 1, 1, 1, 1,-1,-1,-1],
+                [-1, 1, 1, 1, 1, 1, 1, 1,-1,-1],
+                [-1, 1, 1,-1,-1,-1,-1,-1,-1,-1],
+                [-1, 1, 1, 1, 1, 1, 1,-1,-1,-1],
+                [-1, 1, 1, 1, 1, 1, 1, 1,-1,-1],
+                [-1, 1, 1,-1,-1,-1, 1, 1,-1,-1],
+                [-1, 1, 1,-1,-1,-1, 1, 1,-1,-1],
+                [-1, 1, 1,-1,-1,-1, 1, 1,-1,-1],
+                [-1, 1, 1, 1, 1, 1, 1, 1,-1,-1],
+                [-1,-1, 1, 1, 1, 1, 1,-1,-1,-1]])
+
+X8_2=np.array([ [-1,-1,-1, 1, 1, 1, 1,-1,-1,-1],
+                [-1,-1, 1, 1, 1, 1, 1, 1,-1,-1],
+                [-1, 1, 1,-1,-1,-1,-1, 1, 1,-1],
+                [-1, 1, 1,-1,-1,-1,-1, 1, 1,-1],
+                [-1,-1, 1, 1, 1, 1, 1, 1,-1,-1],
+                [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
+                [ 1, 1,-1,-1,-1,-1,-1,-1, 1, 1],
+                [ 1, 1,-1,-1,-1,-1,-1,-1, 1, 1],
+                [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
+                [-1,-1, 1, 1, 1, 1, 1, 1,-1,-1]])
 
 label = ['0','2','4','6','8']
-ith = 4   #--  label[ith]
-noise = 0.15
-np.random.seed(1243)
-X_test = add_noise(X8,noise).reshape(-1,1)
-#------------------------------------------------
-#-------------  Storage Phase -------------------
-#------------------------------------------------
+ith = 4  # label[ith]
+noise = 0.2
+unknown = 0.1
+#np.random.seed(150)
+X_test = add_unknown(add_noise(X8_2,noise),unknown).reshape(-1,1)
 
-#------------  flatten the pattern  -------------
+# Storage Phase
+# flatten the pattern
 X0      = X0.reshape(1,X0.size)
 X2      = X2.reshape(1,X2.size)
 X4      = X4.reshape(1,X4.size)
@@ -141,29 +204,25 @@ for i in range(X.shape[2]):
     for j in range(X.shape[2]):
         if i==j:
             W_fixed[i,j]=0
-#------------- Wp is fixed now -----------
 
-#-----------  Retrival Phase  ------------ 
+# W is fixed now 
+# Let's retrieve the pattern X with some noise
 
-#------------ input testing pattern X ----
-#X_test = X8.reshape(-1,1)                    #-- change label index
 E = energy(X_test,W_fixed)
-#------------  obtain new X  -------------
 E_cycle = [E]
 print('-------------------------------------')
 print('E(0) : ',E)
 print('X(0) : ',X_test[:,0])
+X_new = np.zeros([10,10])
 X_new = X_test
-
+# obtain new X  
 for cycle in range(100):
     X_new = f(W_fixed,X_new)
     E = energy(X_new,W_fixed)
-    E_cycle.append(E[0,0])
-    
+    E_cycle.append(E[0,0])    
     print('-------------------------------------')
     print('E({}) : {}'.format(cycle+1,E[0,0]))
-    print('X({}) : {}'.format(cycle+1,X_new[:,0]))
-    
+    print('X({}) : {}'.format(cycle+1,X_new[:,0]))    
     if E_cycle[cycle+1] == E_cycle[cycle] :
         print('-------------------------------------')
         print('cycle :',cycle+1)
@@ -174,45 +233,32 @@ for cycle in range(100):
 #-----------------  display result  ---------------
 X_test = X_test.reshape(10,10)
 X_new = X_new.reshape(10,10)
-
-
 csv_E = []
 with open('Retrieval_phase.csv', newline='') as csvfile:  
   rows = csv.DictReader(csvfile)  
   for row in rows:           
     #print(row['Pattern'], row['E'])    
-    csv_E.append(float(row['E']))
+    csv_E.append(float(row['E']))    
 
 csv_E = np.array(csv_E)
-label = ['0','2','4','6','8']
 result = label[np.argmin(abs(csv_E-E_cycle[-1]))]
 
+fig = plt.figure(num='Retreive phase',figsize=(18,5))
+ax = fig.add_subplot(141)
+ax.set_title('Pattern {} with noise {}% and unknown {}%'.format(label[ith],noise*100,unknown*100)) #-- change label index
+ax.imshow(bw(X_test),cmap = plt.cm.gray)
 
-plt.figure(num='Retreive phase',figsize=(18,5))
-plt.subplot(141)
-plt.title('Pattern {} with noise {}%'.format(label[ith],noise*100)) #-- change label index
-plt.imshow(bw(X_test),cmap = plt.cm.gray)
+ax2 = fig.add_subplot(142)
+ax2.set_title('Retrieval and Recognition result : {}'.format(result))
+ax2.imshow(bw(X_new),cmap = plt.cm.gray)
 
-plt.subplot(142)
-plt.title('Result : {}'.format(result))
-plt.imshow(bw(X_new),cmap = plt.cm.gray)
-
-plt.subplot(122)
-plt.plot(range(len(E_cycle)),E_cycle)
-plt.title('Energy : {}'.format(E_cycle[-1])) #-- change label index
-plt.xlabel('cycle')
-plt.ylabel('Energy')
+ax3 = fig.add_subplot(122)
+ax3.plot(range(len(E_cycle)),E_cycle)
+ax3.set_title('E_final : {}'.format(E_cycle[-1]))
+ax3.set_xlabel('cycle')
+ax3.set_ylabel('Energy')
 plt.show()
 
-'''
-#--------------------------------------------------------------------
-table = [
-    #['Pattern' , 'E'],
-    [ label[ith] , E_cycle[-1]] #-- change label index
-]
-with open('Retrieval_phase.csv', 'a', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerows(table)'''
 
 
 
