@@ -10,7 +10,7 @@ dirs = os.listdir(dirName3) #--- change dirName 1,2,3
 frames = []
 gif_name1 = 'noise.gif'
 gif_name2 = 'unknown.gif'
-gif_name3 = 'bo th .gif'
+gif_name3 = 'both.gif'
 
 for file in dirs:
     frames.append(imageio.imread(dirName3 + file)) #-- change dirName 1,2,3

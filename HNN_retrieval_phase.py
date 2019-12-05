@@ -13,7 +13,7 @@ def bw(X):
             elif X[i,j] == 1:
                 X[i,j] = 0
             else :
-                X[i,j] = 100
+                X[i,j] = 125
     return X
 
 def energy(X,W_fixed):
@@ -199,7 +199,7 @@ X       = np.array([X0,X2,X4,X6,X8])
 W_fixed = np.zeros([X0.shape[1],X0.shape[1]])
 
 for p in range(X.shape[0]):      
-    W_fixed = W_fixed + np.dot(X[p,0,:].reshape(-1,1),X[p,0,:].reshape(1,-1))  
+    W_fixed = W_fixed + np.dot(X[p,:,:].reshape(-1,1),X[p,:,:].reshape(1,-1))  
 for i in range(X.shape[2]):
     for j in range(X.shape[2]):
         if i==j:
