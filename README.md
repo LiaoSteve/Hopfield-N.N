@@ -1,5 +1,5 @@
 # HNN
-- [X] Recongni digits 0,2,4,6,8
+- [X] Recognize digits 0,2,4,6,8
 ```bush
 1) Add noise
 ```
